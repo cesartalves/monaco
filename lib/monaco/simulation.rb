@@ -16,6 +16,11 @@ module Monaco
       Rational(events, trials)
     end
 
+    def self.run(trials: 10_000, &block)
+      instance = self.new(trials: trials, &block)
+      instance.run
+    end
+
     private
 
     attr_reader :trials, :block

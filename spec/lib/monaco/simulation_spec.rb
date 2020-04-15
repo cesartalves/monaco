@@ -15,29 +15,24 @@ module Monaco
     describe "#run" do
       it "runs the block n times" do
         count = 0
-        simulation = Simulation.new(trials: 50) { count += 1}
-        simulation.run
+        simulation = Simulation.run(trials: 50) { count += 1 }
         expect(count).to eq(50)
       end
 
       it "passes the trial number to the block" do
         trial_count = 0
-        simulation = Simulation.new(trials: 50) { |n| trial_count = n }
-        simulation.run
+        simulation = Simulation.run(trials: 50) { |n| trial_count = n }
         expect(trial_count).to eq(50)
       end
 
       it "returns a probability based on the block's return value" do
-        simulation = Simulation.new(trials: 100) { |n| true }
-        probability = simulation.run
+        probability = Simulation.run(trials: 100) { |n| true }
         expect(probability).to eq(Rational(100, 100))
 
-        simulation = Simulation.new(trials: 100) { |n| false }
-        probability = simulation.run
+        probability = Simulation.run(trials: 100) { |n| false }
         expect(probability).to eq(Rational(0, 100))
 
-        simulation = Simulation.new(trials: 100) { |n| n == 1 }
-        probability = simulation.run
+        probability = Simulation.run(trials: 100) { |n| n == 1 }
         expect(probability).to eq(Rational(1, 100))
       end
     end
